@@ -38,6 +38,8 @@
       if($result['success']) {
         // Set user session
         $_SESSION['user'] = $result['user'];
+        // Explicitly set user_id in session
+        $_SESSION['user_id'] = $result['user']['user_id']; 
         
         // If there's a redirect URL stored (e.g., from checkout), go there
         if(isset($_SESSION['redirect_after_login']) && !empty($_SESSION['redirect_after_login'])) {
