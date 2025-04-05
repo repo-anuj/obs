@@ -4,7 +4,7 @@ require_once "./functions/database_functions.php";
 require_once "./functions/review_functions.php";
 
 // Check if user is logged in
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['user_id'])) {
     header('Content-Type: application/json');
     echo json_encode(['success' => false, 'message' => 'Please login to vote on reviews']);
     exit;
@@ -12,7 +12,7 @@ if (!isset($_SESSION['user'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn = db_connect();
-    $user_id = $_SESSION['user']['user_id'];
+    $user_id = $_SESSION['user_id'];
     $review_id = intval($_POST['review_id']);
     $vote_type = $_POST['vote_type'];
     
@@ -75,8 +75,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode([
         'success' => true,
         'message' => $message,
-        'helpful_count' => (int)$counts['helpful_count'],
-        'unhelpful_count' => (int)$counts['unhelpful_count']
+        'newCounts' => [
+            'helpful_votes' => (int)$counts['helpful_count'],
+            'unhelpful_votes' => (int)$counts['unhelpful_count']
+        ]
     ]);
     exit;
 }
