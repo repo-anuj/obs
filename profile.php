@@ -477,29 +477,6 @@
 ?>
 
 <?php
-  // Process review submission
-  if(isset($_POST['submit_review'])) {
-    $order_id = $_POST['order_id'];
-    $book_isbn = $_POST['book_isbn'];
-    $review = $_POST['review'];
-    $rating = $_POST['rating'];
-    
-    $query = "INSERT INTO reviews (order_id, book_isbn, review, rating) VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("isss", $order_id, $book_isbn, $review, $rating);
-    $stmt->execute();
-    
-    if($stmt->affected_rows > 0) {
-      $_SESSION['success_message'] = "Review submitted successfully!";
-      header("Location: profile.php#orders-section");
-      exit;
-    } else {
-      echo "Error submitting review: " . $conn->error;
-    }
-  }
-?>
-
-<?php
   // Fetch user's order history
   $query = "SELECT o.orderid, o.user_id, o.amount, o.ship_name, o.ship_address, o.ship_city, 
 			o.ship_zip_code, o.ship_country, o.ship_phone, o.date, o.status,
