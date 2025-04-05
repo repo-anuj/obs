@@ -43,17 +43,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_isbn'])) {
     $user = $stmt->get_result()->fetch_assoc();
     $reviewer_name = $user['name'];
 
-    // Get order ID
-    $query = "SELECT o.orderid 
-             FROM orders o 
-             JOIN order_items oi ON o.orderid = oi.orderid 
-             WHERE o.user_id = ? AND oi.book_isbn = ? 
-             ORDER BY o.date DESC LIMIT 1";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("is", $user_id, $book_isbn);
-    $stmt->execute();
-    $order = $stmt->get_result()->fetch_assoc();
-    $order_id = $order['orderid'];
+    // -- DEBUGGING START --
+    error_log("Processing Review:");
+    error_log("User ID: " . $user_id);
+    error_log("Book ISBN: " . $book_isbn);
+    error_log("Rating: " . $rating);
+    error_log("Review Text: " . $review_text);
+    error_log("Reviewer Name: " . $reviewer_name);
+    error_log("Has Purchased Check: " . (hasUserPurchasedBook($conn, $user_id, $book_isbn) ? 'Yes' : 'No'));
+    // -- DEBUGGING END --
 
     try {
         $conn->begin_transaction();
@@ -68,36 +66,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_isbn'])) {
         if ($existing_review) {
             // Update existing review
             $query = "UPDATE reviews 
-                     SET rating = ?, review_text = ?, reviewer_name = ? 
+                     SET rating = ?, review_text = ? 
                      WHERE review_id = ?";
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param("issi", $rating, $review_text, $reviewer_name, $existing_review['review_id']);
+            $stmt_update = $conn->prepare($query);
+            $stmt_update->bind_param("isi", $rating, $review_text, $existing_review['review_id']);
         } else {
             // Insert new review
             $query = "INSERT INTO reviews 
-                     (user_id, book_isbn, rating, review_text, reviewer_name, order_id) 
-                     VALUES (?, ?, ?, ?, ?, ?)";
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param("isissi", $user_id, $book_isbn, $rating, $review_text, $reviewer_name, $order_id);
+                     (user_id, book_isbn, rating, review_text) 
+                     VALUES (?, ?, ?, ?)";
+            $stmt_insert = $conn->prepare($query);
+            $stmt_insert->bind_param("isis", $user_id, $book_isbn, $rating, $review_text);
         }
 
-        if ($stmt->execute()) {
-            // Update book's average rating
-            $query = "UPDATE books b 
-                     SET average_rating = (SELECT AVG(rating) FROM reviews r WHERE r.book_isbn = b.book_isbn),
-                         total_reviews = (SELECT COUNT(*) FROM reviews r WHERE r.book_isbn = b.book_isbn)
-                     WHERE book_isbn = ?";
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param("s", $book_isbn);
-            $stmt->execute();
-
-            $conn->commit();
-            $_SESSION['success'] = $existing_review ? "Review updated successfully!" : "Review submitted successfully!";
+        if ($existing_review) {
+            $stmt_update->execute();
         } else {
-            throw new Exception("Error executing review query");
+            $stmt_insert->execute();
         }
+
+        // Update book's average rating
+        $query = "UPDATE books b 
+                 SET average_rating = (SELECT AVG(rating) FROM reviews r WHERE r.book_isbn = b.book_isbn),
+                     total_reviews = (SELECT COUNT(*) FROM reviews r WHERE r.book_isbn = b.book_isbn)
+                 WHERE book_isbn = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $book_isbn);
+        $stmt->execute();
+
+        $conn->commit();
+        $_SESSION['success'] = $existing_review ? "Review updated successfully!" : "Review submitted successfully!";
     } catch (Exception $e) {
         $conn->rollback();
+        // Log the specific database error
+        error_log("Review Save Error: " . $e->getMessage()); 
         $_SESSION['error'] = "Error " . ($existing_review ? "updating" : "submitting") . " review. Please try again.";
     }
 
