@@ -23,7 +23,9 @@
                 <a href="#" class="text-decoration-none text-muted small me-md-4 mb-1 mb-md-0">Privacy Policy</a>
                 <a href="#" class="text-decoration-none text-muted small me-md-4 mb-1 mb-md-0">Terms of Use</a>
                 <a href="admin.php" class="text-decoration-none text-primary">Admin Login</a>
+                <a href="contact.php" class="text-decoration-none text-muted small me-md-4 mb-1 mb-md-0">Contact Us</a>
               </div>
+              <p class="text-muted small mt-2 mb-0">Email: contact@onlinebookstore.com | Phone: +1 (555) 123-4567</p>
               <p class="text-muted small mt-2 mb-0">&copy; <?= date('Y') ?> Online Book Store. All rights reserved.</p>
             </div>
           </div>
