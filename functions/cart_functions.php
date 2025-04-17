@@ -8,12 +8,14 @@
 	function total_price($cart){
 		$price = 0.0;
 		if(is_array($cart)){
+		  	$conn = db_connect();
 		  	foreach($cart as $isbn => $qty){
-		  		$bookprice = getbookprice($isbn);
+		  		$bookprice = getbookprice($conn, $isbn);
 		  		if($bookprice){
 		  			$price += $bookprice * $qty;
 		  		}
 		  	}
+		  	mysqli_close($conn);
 		}
 		return $price;
 	}

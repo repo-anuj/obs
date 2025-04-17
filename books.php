@@ -15,6 +15,22 @@
   $title = "List of Books";
   require_once "./template/header.php";
 ?>
+  <!-- Search Bar -->
+  <div class="row justify-content-center my-4">
+    <div class="col-md-6">
+      <form class="d-flex" action="advanced-search.php" method="GET">
+        <div class="input-group">
+          <input class="form-control" type="search" name="query" placeholder="Search books by title, author, ISBN..." aria-label="Search">
+          <button class="btn btn-primary" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+          <a href="advanced-search.php" class="btn btn-outline-secondary" data-bs-toggle="tooltip" title="Advanced Search">
+            <i class="fas fa-sliders-h"></i>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
   <p class="lead text-center text-muted">List of All Books</p>
     <?php for($i = 0; $i < mysqli_num_rows($result); $i++){ ?>
       <div class="row">

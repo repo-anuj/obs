@@ -471,12 +471,6 @@
 </script>
 
 <?php
-  // Keep connection open for footer
-  // if(isset($conn)) {mysqli_close($conn); }
-  require_once "./template/footer.php";
-?>
-
-<?php
   // Fetch user's order history
   $query = "SELECT o.orderid, o.user_id, o.amount, o.ship_name, o.ship_address, o.ship_city, 
 			o.ship_zip_code, o.ship_country, o.ship_phone, o.date, o.status,

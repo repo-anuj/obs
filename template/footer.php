@@ -1,6 +1,6 @@
       <hr class="mt-5">
 
-      <footer class="fixed-bottom bg-white shadow-sm py-4">
+      <footer class="bg-white shadow-sm py-4 footer-sticky">
         <div class="container">
           <div class="row align-items-center">
             <div class="col-md-4 mb-3 mb-md-0">
@@ -22,7 +22,6 @@
               <div class="d-flex flex-column flex-md-row justify-content-md-end">
                 <a href="#" class="text-decoration-none text-muted small me-md-4 mb-1 mb-md-0">Privacy Policy</a>
                 <a href="#" class="text-decoration-none text-muted small me-md-4 mb-1 mb-md-0">Terms of Use</a>
-                <a href="admin.php" class="text-decoration-none text-primary">Admin Login</a>
                 <a href="contact.php" class="text-decoration-none text-muted small me-md-4 mb-1 mb-md-0">Contact Us</a>
               </div>
               <p class="text-muted small mt-2 mb-0">Email: contact@onlinebookstore.com | Phone: +1 (555) 123-4567</p>
@@ -31,8 +30,8 @@
           </div>
         </div>
       </footer>
-      <div class="clear-fix py-5"></div> <!-- Extra space to prevent content from being hidden by fixed footer -->
     </div> <!-- /container -->
+  </div> <!-- End Content Wrapper -->
 
     <!-- Back to top button -->
     <button id="back-to-top" class="btn btn-primary rounded-circle position-fixed bottom-0 end-0 translate-middle d-none">

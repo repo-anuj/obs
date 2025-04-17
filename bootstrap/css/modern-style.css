@@ -372,3 +372,30 @@ label {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-color);
 }
+
+/* Add any custom modern styles here */
+
+/* Ensure smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Sticky Footer Styles */
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Fallback for older browsers */
+}
+
+.content-wrap {
+  flex: 1 0 auto; /* Allow content to grow and shrink, but don't shrink below its content size */
+}
+
+.footer-sticky {
+  flex-shrink: 0; /* Prevent footer from shrinking */
+  /* Add any specific footer styles if needed */
+}

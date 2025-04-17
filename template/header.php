@@ -82,6 +82,11 @@
                 <!-- Admin Navigation -->
                 <ul class="navbar-nav">
                   <li class="nav-item animate__animated animate__fadeIn animate__delay-1s">
+                    <a class="nav-link" href="admin_dashboard.php">
+                      <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                    </a>
+                  </li>
+                  <li class="nav-item animate__animated animate__fadeIn animate__delay-1s">
                     <a class="nav-link" href="admin_book.php">
                       <i class="fa fa-th-list me-1"></i> Book List
                     </a>
@@ -103,11 +108,7 @@
                   </li>
                 </ul>
                 </li>
-                <li class="nav-item animate__animated animate__fadeIn animate__delay-2s">
-                  <a class="nav-link" href="admin_tags.php">
-                    <i class="fas fa-tags me-1"></i> Manage Tags
-                  </a>
-                </li>
+                
             <?php else: ?>
                 <!-- Customer Navigation -->
                 <li class="nav-item animate__animated animate__fadeIn animate__delay-1s">
@@ -172,27 +173,19 @@
                     </ul>
                   </li>
                 <?php else: ?>
-                  <!-- Login/Register -->
+                  <!-- Login/Register/Admin Login -->
                   <li class="nav-item animate__animated animate__fadeIn animate__delay-3s">
                     <a href="login.php" class="btn btn-outline-primary me-2"><i class="fas fa-sign-in-alt me-1"></i> Login</a>
                   </li>
                   <li class="nav-item animate__animated animate__fadeIn animate__delay-4s">
-                    <a href="register.php" class="btn btn-primary"><i class="fas fa-user-plus me-1"></i> Register</a>
+                    <a href="register.php" class="btn btn-primary me-2"><i class="fas fa-user-plus me-1"></i> Register</a>
+                  </li>
+                  <li class="nav-item animate__animated animate__fadeIn animate__delay-5s">
+                    <a href="admin.php" class="nav-link">Admin Login</a>
                   </li>
                 <?php endif; ?>
             <?php endif; ?>
           </ul>
-          <form class="d-flex ms-3 animate__animated animate__fadeIn animate__delay-4s" action="advanced-search.php" method="GET">
-            <div class="input-group">
-              <input class="form-control" type="search" name="query" placeholder="Search books..." aria-label="Search">
-              <button class="btn btn-primary" type="submit">
-                <i class="fas fa-search"></i>
-              </button>
-              <a href="advanced-search.php" class="btn btn-outline-secondary" data-bs-toggle="tooltip" title="Advanced Search">
-                <i class="fas fa-sliders-h"></i>
-              </a>
-            </div>
-          </form>
         </div>
       </div>
     </nav>
@@ -209,11 +202,13 @@
           </a>
         </div>
         <div class="col-md-6">
-          <img src="https://source.unsplash.com/random/600x400/?books,library" alt="Books" class="img-fluid rounded shadow animate__animated animate__fadeInUp">
+          <img src="template/Book lover-amico.png" alt="Books" class="img-fluid rounded shadow animate__animated animate__fadeInUp">
         </div>
       </div>
       <hr class="my-4">
     </div>
     <?php endif; ?>
 
-    <div class="container" id="main">
+    <div class="container py-4">
+    <!-- Start Content Wrapper for Sticky Footer -->
+    <div class="content-wrap">
